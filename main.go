@@ -61,7 +61,7 @@ func getAllDBInstances(rdsCli interface {
 		return nil, fmt.Errorf("getting RDS instances:%v", err)
 	}
 
-	rdsIdentifiers := make([]map[string]string, len(resp.DBInstances))
+	rdsIdentifiers := make([]map[string]string, 0, len(resp.DBInstances))
 	for _, rds := range resp.DBInstances {
 		rdsIdentifiers = append(rdsIdentifiers, map[string]string{
 			"{#RDSIDENTIFIER}": *rds.DBInstanceIdentifier,
@@ -78,7 +78,7 @@ func getAllCloudFrontDistributions(cloudFrontCli interface {
 		return nil, fmt.Errorf("listing CloudFront distributions %v", err)
 	}
 
-	dists := make([]map[string]string, len(resp.DistributionList.Items))
+	dists := make([]map[string]string, 0, len(resp.DistributionList.Items))
 	for _, dist := range resp.DistributionList.Items {
 		dists = append(dists, map[string]string{
 			"{#DISTID}": *dist.Id,
@@ -95,7 +95,7 @@ func getAllElasticLoadBalancers(elbCli interface {
 		return nil, fmt.Errorf("reading ELBs:%v", err)
 	}
 
-	elbs := make([]map[string]string, len(resp.LoadBalancerDescriptions))
+	elbs := make([]map[string]string, 0, len(resp.LoadBalancerDescriptions))
 	for _, elb := range resp.LoadBalancerDescriptions {
 		elbs = append(elbs, map[string]string{
 			"{#LOADBALANCERNAME}": *elb.LoadBalancerName,
